@@ -24,6 +24,8 @@ cleanup:
   - /share/gtk-doc
 
 modules:
+  - shared-modules/physfs/physfs.json
+
   - name: libyaml
     buildsystem: autotools
     config-opts:
@@ -56,47 +58,6 @@ modules:
       - type: archive
         url: https://libzip.org/download/libzip-1.11.4.tar.xz
         sha256: 8a247f57d1e3e6f6d11413b12a6f28a9d388de110adc0ec608d893180ed7097b
-
-  - name: physfs
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
-      - -DCMAKE_INSTALL_LIBDIR=lib
-      - -DPHYSFS_ARCHIVE_ZIP=ON
-      - -DPHYSFS_ARCHIVE_7Z=OFF
-      - -DPHYSFS_ARCHIVE_GRP=OFF
-      - -DPHYSFS_ARCHIVE_WAD=OFF
-      - -DPHYSFS_ARCHIVE_HOG=OFF
-      - -DPHYSFS_ARCHIVE_MVL=OFF
-      - -DPHYSFS_ARCHIVE_QPAK=OFF
-      - -DPHYSFS_ARCHIVE_SLB=OFF
-      - -DPHYSFS_ARCHIVE_ISO9660=OFF
-      - -DPHYSFS_ARCHIVE_VDF=OFF
-      - -DPHYSFS_BUILD_STATIC=OFF
-      - -DPHYSFS_BUILD_SHARED=ON
-      - -DPHYSFS_BUILD_TEST=OFF
-      - -DPHYSFS_BUILD_DOCS=OFF
-      - -DPHYSFS_DISABLE_INSTALL=OFF
-    sources:
-      - type: git
-        url: https://github.com/icculus/physfs.git
-        tag: release-3.2.0
-        commit: eb3383b532c5f74bfeb42ec306ba2cf80eed988c
-
-  - name: sdl3
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DCMAKE_INSTALL_LIBDIR=lib
-      - -DSDL_SHARED=ON
-      - -DSDL_STATIC=OFF
-      - -DSDL_TEST_LIBRARY=OFF
-    sources:
-      - type: git
-        url: https://github.com/libsdl-org/SDL.git
-        tag: release-3.4.8
-        commit: d9d5536704d585616d4db3c8ba3c4ff6fc2757e1
 
   - name: ixwebsocket
     buildsystem: cmake-ninja
@@ -146,9 +107,9 @@ modules:
       - install -d /app/bin
       - ln -s ../lib/openglad/openglad /app/bin/openglad
       - ln -s ../lib/openglad/openscen /app/bin/openscen
-      - install -Dm644 /run/build/openglad/io.github.openglad.openglad.desktop /app/share/applications/io.github.openglad.openglad.desktop
-      - install -Dm644 /run/build/openglad/io.github.openglad.openglad.metainfo.xml /app/share/metainfo/io.github.openglad.openglad.metainfo.xml
-      - install -Dm644 /run/build/openglad/io.github.openglad.openglad.svg /app/share/icons/hicolor/scalable/apps/io.github.openglad.openglad.svg
+      - install -Dm644 /run/build/openglad/${FLATPAK_ID}.desktop -t /app/share/applications/
+      - install -Dm644 /run/build/openglad/${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo/
+      - install -Dm644 /run/build/openglad/${FLATPAK_ID}.svg -t /app/share/icons/hicolor/scalable/apps/
     sources:
       - type: git
         url: https://github.com/openglad/openglad.git
